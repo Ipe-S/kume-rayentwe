@@ -46,11 +46,10 @@ export default function AutoLocation({ skip = false }: AutoLocationProps) {
           const [weatherData, geoData]: [WeatherResponse, GeocodingResult] =
             await Promise.all([weatherRes.json(), geoRes.json()]);
 
-          if ("error" in weatherData || "error" in geoData) {
-            throw new Error(
-              (weatherData as { error: string }).error ??
-              (geoData as { error: string }).error
-            );
+          const wErr = weatherData as unknown as { error?: string };
+          const gErr = geoData as unknown as { error?: string };
+          if (wErr.error ?? gErr.error) {
+            throw new Error(wErr.error ?? gErr.error ?? "Error desconocido");
           }
 
           setWeather(weatherData);
