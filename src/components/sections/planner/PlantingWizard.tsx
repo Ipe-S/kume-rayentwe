@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import StepIndicator from "./StepIndicator";
 import StepLocation from "./StepLocation";
 import StepPhoto from "./StepPhoto";
@@ -29,11 +29,28 @@ export default function PlantingWizard() {
   const [space, setSpace] = useState<SpaceInput>(INITIAL_SPACE);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
+  const photoUrlRef = useRef<string | null>(null);
 
   const [data, setData] = useState<SuggestionResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<PlantSuggestion | null>(null);
+
+  // El object URL vive mientras dure el asistente: StepPhoto se desmonta al
+  // cambiar de paso, pero la vista previa se sigue mostrando en el detalle.
+  useEffect(() => {
+    return () => {
+      if (photoUrlRef.current) URL.revokeObjectURL(photoUrlRef.current);
+    };
+  }, []);
+
+  const setPhoto = useCallback((file: File | null) => {
+    if (photoUrlRef.current) URL.revokeObjectURL(photoUrlRef.current);
+    const url = file ? URL.createObjectURL(file) : null;
+    photoUrlRef.current = url;
+    setPhotoUrl(url);
+    setPhotoName(file?.name ?? null);
+  }, []);
 
   const goTo = useCallback((index: number) => {
     setStep(index);
@@ -78,8 +95,7 @@ export default function PlantingWizard() {
     setMaxReached(0);
     setLocation(null);
     setSpace(INITIAL_SPACE);
-    setPhotoUrl(null);
-    setPhotoName(null);
+    setPhoto(null);
     setData(null);
     setSelected(null);
     setError(null);
@@ -124,10 +140,7 @@ export default function PlantingWizard() {
             photoUrl={photoUrl}
             photoName={photoName}
             space={space}
-            onPhotoChange={(url, name) => {
-              setPhotoUrl(url);
-              setPhotoName(name);
-            }}
+            onPhotoChange={setPhoto}
             onSpaceChange={(next) => {
               setSpace(next);
               setData(null);

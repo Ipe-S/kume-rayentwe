@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useRef, useState, type ChangeEvent } from "react";
 import type { LightExposure, SpaceInput } from "@/types";
 
 interface StepPhotoProps {
   photoUrl: string | null;
   photoName: string | null;
   space: SpaceInput;
-  onPhotoChange: (url: string | null, name: string | null) => void;
+  onPhotoChange: (file: File) => void;
   onSpaceChange: (space: SpaceInput) => void;
   onBack: () => void;
   onNext: () => void;
@@ -30,13 +30,6 @@ export default function StepPhoto({
 }: StepPhotoProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
-  const createdUrlRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (createdUrlRef.current) URL.revokeObjectURL(createdUrlRef.current);
-    };
-  }, []);
 
   function handleFile(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -51,11 +44,8 @@ export default function StepPhoto({
       return;
     }
 
-    if (createdUrlRef.current) URL.revokeObjectURL(createdUrlRef.current);
-    const url = URL.createObjectURL(file);
-    createdUrlRef.current = url;
     setError(null);
-    onPhotoChange(url, file.name);
+    onPhotoChange(file);
   }
 
   const areaM2 = ((space.widthCm * space.depthCm) / 10000).toFixed(2);
