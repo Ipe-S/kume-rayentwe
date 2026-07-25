@@ -126,6 +126,85 @@ export interface WeatherResponse {
   daily: DailyWeather;
 }
 
+// ─── Planificador de plantación (wizard) ─────────────────────────────────────
+
+export type LightExposure = "pleno sol" | "media sombra" | "sombra";
+export type WaterNeed = "bajo" | "medio" | "alto";
+
+export interface PlantingConditions {
+  soil: string;
+  spacingCm: number;
+  depthCm: number;
+  season: string;
+  watering: string;
+  care: string;
+}
+
+export interface CatalogPlant {
+  id: string;
+  commonName: string;
+  scientificName: string;
+  emoji: string;
+  category: string;
+  matureWidthCm: number;
+  matureHeightCm: number;
+  light: LightExposure;
+  water: WaterNeed;
+  /** Rango de temperatura media semanal tolerado (°C) */
+  tempMin: number;
+  tempMax: number;
+  summary: string;
+  advantages: string[];
+  disadvantages: string[];
+  planting: PlantingConditions;
+}
+
+export interface PlantSuggestion {
+  plant: CatalogPlant;
+  /** Compatibilidad 0-100 con la ubicación y el espacio declarados */
+  score: number;
+  reasons: string[];
+  warnings: string[];
+  /** Cantidad de ejemplares que entran en el espacio disponible */
+  unitsThatFit: number;
+}
+
+export interface SpaceInput {
+  widthCm: number;
+  depthCm: number;
+  light: LightExposure;
+}
+
+export interface PlannerLocation {
+  label: string;
+  latitude: number;
+  longitude: number;
+  admin1?: string;
+  country?: string;
+  /** Cómo se obtuvo la ubicación */
+  source: "gps" | "manual";
+}
+
+export interface SuggestionRequest extends SpaceInput {
+  latitude: number;
+  longitude: number;
+}
+
+export interface ClimateSummary {
+  avgTemp: number;
+  avgPrecip: number;
+  currentTemp: number;
+  humidity: number;
+  weatherDescription: string;
+  weatherEmoji: string;
+}
+
+export interface SuggestionResponse {
+  zone: WeatherZoneInfo;
+  climate: ClimateSummary;
+  suggestions: PlantSuggestion[];
+}
+
 export interface WeatherZoneInfo {
   zone: string;
   biome: string;
