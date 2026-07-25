@@ -3,6 +3,9 @@ import { getPlants } from "@/lib/api";
 import PlantCard from "@/components/ui/PlantCard";
 import SectionHeader from "@/components/ui/SectionHeader";
 
+// Forzar renderizado dinámico — requiere API key en runtime, no en build time
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Catálogo de Plantas",
   description:
