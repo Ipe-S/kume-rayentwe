@@ -1,28 +1,18 @@
 import type { Metadata } from "next";
-import HeroSection from "@/components/sections/HeroSection";
-import ServicesSection from "@/components/sections/ServicesSection";
-import FeaturedProjects from "@/components/sections/FeaturedProjects";
-import CtaBanner from "@/components/sections/CtaBanner";
+import PlantingWizard from "@/components/sections/planner/PlantingWizard";
 
 export const metadata: Metadata = {
-  title: "Küme Rayentwe — Paisajismo",
+  title: "Küme Rayentwe — ¿Qué planto en mi espacio?",
   description:
-    "Diseño y creación de jardines sustentables en Buenos Aires. Transformamos espacios en entornos naturales únicos.",
+    "Asistente en 4 pasos: ubicación, foto y medidas del espacio, sugerencias de especies y detalle con condiciones, ventajas y desventajas.",
   openGraph: {
-    title: "Küme Rayentwe — Paisajismo",
+    title: "Küme Rayentwe — ¿Qué planto en mi espacio?",
     description:
-      "Diseño y creación de jardines sustentables en Buenos Aires. Transformamos espacios en entornos naturales únicos.",
+      "Asistente en 4 pasos: ubicación, foto y medidas del espacio, sugerencias de especies y detalle con condiciones, ventajas y desventajas.",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
 };
 
 export default function HomePage() {
-  return (
-    <>
-      <HeroSection />
-      <ServicesSection />
-      <FeaturedProjects />
-      <CtaBanner />
-    </>
-  );
+  return <PlantingWizard />;
 }
