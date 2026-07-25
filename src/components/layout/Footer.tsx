@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 const quickLinks = [
-  { label: "Inicio", href: "/" },
+  { label: "¿Qué planto?", href: "/" },
+  { label: "Nosotros", href: "/nosotros" },
   { label: "Proyectos", href: "/proyectos" },
   { label: "Plantas", href: "/plantas" },
   { label: "Clima", href: "/clima" },
