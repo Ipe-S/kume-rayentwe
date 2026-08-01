@@ -4,14 +4,15 @@
 
 @layer base {
   :root {
-    --color-primary: #2d6a4f;
-    --color-primary-light: #52b788;
-    --color-primary-dark: #1b4332;
-    --color-secondary: #d4a373;
-    --color-background: #fefae0;
-    --color-surface: #ffffff;
-    --color-text: #1b1b1b;
-    --color-text-muted: #6b7280;
+    --color-primary: #4F7942;
+    --color-primary-light: #7EAA68;
+    --color-primary-dark: #2A4723;
+    --color-secondary: #5C4033;
+    --color-accent: #D96B27;
+    --color-background: #FDFBF7;
+    --color-surface: #F5EFEB;
+    --color-text: #222222;         
+    --color-text-muted: #5A6055;    
   }
 
   html {

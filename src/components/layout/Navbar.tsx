@@ -6,10 +6,6 @@ import { useState } from "react";
 
 const navLinks = [
   { label: "¿Qué planto?", href: "/" },
-  { label: "Nosotros", href: "/nosotros" },
-  { label: "Proyectos", href: "/proyectos" },
-  { label: "Plantas", href: "/plantas" },
-  { label: "Clima", href: "/clima" },
   { label: "Contacto", href: "/contacto" },
 ];
 

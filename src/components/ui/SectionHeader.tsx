@@ -15,7 +15,6 @@ export default function SectionHeader({
       >
         {title}
       </h2>
-
       {/* Decorative line */}
       <div
         className={`h-1 w-16 rounded-full mb-4 ${
@@ -23,7 +22,6 @@ export default function SectionHeader({
         } ${light ? "bg-secondary" : "bg-primary-light"}`}
         aria-hidden="true"
       />
-
       {subtitle && (
         <p
           className={`text-lg leading-relaxed max-w-2xl ${

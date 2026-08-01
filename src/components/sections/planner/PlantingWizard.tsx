@@ -1,5 +1,4 @@
 "use client";
-
 import { useCallback, useState } from "react";
 import StepIndicator from "./StepIndicator";
 import StepLocation from "./StepLocation";
@@ -90,17 +89,16 @@ export default function PlantingWizard() {
       <div className="container-custom max-w-5xl">
         <header className="text-center mb-10">
           <p className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            🌿 Planificá tu plantación en 4 pasos
+            🌿 Planificá tu huerto en 4 pasos
           </p>
           <h1 className="font-serif text-3xl sm:text-4xl font-bold text-text-main mb-3">
-            ¿Qué planto en mi espacio?
+            ¿Qué siembro en mi espacio?
           </h1>
           <p className="text-text-muted max-w-2xl mx-auto">
-            Indicá dónde vas a plantar, subí una foto con las medidas del lugar y
+            Indicá dónde vas a sembrar, subí una foto con las medidas del lugar y
             recibí especies sugeridas con sus condiciones, ventajas y desventajas.
           </p>
         </header>
-
         <StepIndicator
           steps={STEPS}
           current={step}

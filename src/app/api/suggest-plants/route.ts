@@ -75,7 +75,8 @@ export async function GET(request: Request) {
       climate,
       suggestions: suggestPlants(
         { widthCm, depthCm, light: light as LightExposure },
-        climate
+        climate,
+        lat
       ),
     };
 

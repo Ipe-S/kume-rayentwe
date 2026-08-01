@@ -19,22 +19,22 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Küme Rayentwe — Paisajismo",
+    default: "Küme Rayentwe — Huerto",
     template: "%s | Küme Rayentwe",
   },
   description:
-    "Diseño y creación de jardines sustentables. Transformamos espacios en entornos naturales únicos.",
+    "Diseño y creación de Huertos sustentables. Transformamos espacios en entornos naturales únicos.",
   metadataBase: new URL("https://jardin-sustentable.vercel.app"),
   openGraph: {
     type: "website",
-    locale: "es_AR",
+    locale: "es_CL",
     siteName: "Küme Rayentwe",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Küme Rayentwe — Paisajismo",
+        alt: "Küme Rayentwe — Huerto",
       },
     ],
   },

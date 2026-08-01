@@ -67,7 +67,7 @@ export default function ContactForm() {
           autoComplete="name"
           value={form.nombre}
           onChange={handleChange}
-          placeholder="Juan Pérez"
+          placeholder="Felipe Saldias"
           className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-text-main placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
         />
       </div>
@@ -87,7 +87,7 @@ export default function ContactForm() {
           autoComplete="email"
           value={form.email}
           onChange={handleChange}
-          placeholder="juan@ejemplo.com"
+          placeholder="ia.saldiax@google.com"
           className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-text-main placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
         />
       </div>

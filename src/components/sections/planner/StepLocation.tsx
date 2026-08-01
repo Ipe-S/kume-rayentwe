@@ -102,7 +102,7 @@ export default function StepLocation({
   return (
     <div className="bg-surface rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8">
       <h2 className="font-serif text-2xl font-bold text-text-main mb-2">
-        1. ¿Dónde vas a plantar?
+        1. ¿Dónde vas a sembrar?
       </h2>
       <p className="text-text-muted mb-6">
         Usá tu ubicación actual o escribí la dirección o localidad del espacio.
@@ -114,7 +114,7 @@ export default function StepLocation({
         disabled={locating}
         className="btn-primary w-full sm:w-auto mb-6 disabled:opacity-60"
       >
-        {locating ? "Detectando…" : "📍 Usar mi ubicación actual"}
+        {locating ? "Detectando…" : "Usar mi ubicación actual"}
       </button>
 
       <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2 mb-4">
@@ -122,7 +122,7 @@ export default function StepLocation({
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Ej: Palermo, Buenos Aires"
+          placeholder="Ej: Puente Alto"
           aria-label="Buscar dirección o localidad"
           minLength={2}
           className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-white text-text-main placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
@@ -172,7 +172,7 @@ export default function StepLocation({
       {value && (
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 bg-primary/5 border border-primary/20 rounded-xl px-4 py-3">
           <p className="text-sm text-text-main flex-1">
-            <span aria-hidden="true">📍</span>{" "}
+            <span aria-hidden="true"></span>{" "}
             <strong>{value.label}</strong>{" "}
             <span className="text-text-muted">
               ({value.latitude.toFixed(3)}, {value.longitude.toFixed(3)} ·{" "}

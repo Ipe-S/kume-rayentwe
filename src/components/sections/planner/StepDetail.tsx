@@ -75,7 +75,7 @@ export default function StepDetail({
             <div>
               <dt className="text-text-muted">Espacio declarado</dt>
               <dd className="font-medium text-text-main">
-                {space.widthCm} × {space.depthCm} cm · {space.light}
+                {space.widthCm} × {space.depthCm} m/2 · {space.light}
               </dd>
             </div>
             <div>

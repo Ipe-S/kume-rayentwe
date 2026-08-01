@@ -29,7 +29,7 @@ export default function StepSuggestions({
   return (
     <div className="bg-surface rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8">
       <h2 className="font-serif text-2xl font-bold text-text-main mb-2">
-        3. Qué podés plantar
+        3. Que puedes sembrar
       </h2>
       <p className="text-text-muted mb-6">
         Cruzamos el clima de tu ubicación con el tamaño y la luz del espacio.

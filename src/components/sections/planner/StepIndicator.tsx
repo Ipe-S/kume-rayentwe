@@ -4,7 +4,6 @@ interface StepIndicatorProps {
   onSelect?: (index: number) => void;
   maxReached: number;
 }
-
 export default function StepIndicator({
   steps,
   current,
