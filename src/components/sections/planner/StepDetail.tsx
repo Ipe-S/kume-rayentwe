@@ -2,17 +2,17 @@
 
 import type {
   PlannerLocation,
-  PlantSuggestion,
+  EnrichedPlantSuggestion,
   SpaceInput,
-  SuggestionResponse,
+  EnrichedSuggestionResponse,
 } from "@/types";
 
 interface StepDetailProps {
-  suggestion: PlantSuggestion;
+  suggestion: EnrichedPlantSuggestion;
   location: PlannerLocation;
   space: SpaceInput;
   photoUrl: string | null;
-  data: SuggestionResponse;
+  data: EnrichedSuggestionResponse;
   onBack: () => void;
   onRestart: () => void;
 }
@@ -96,6 +96,19 @@ export default function StepDetail({
               alt="Foto del espacio a plantar"
               className="w-full h-48 md:h-full object-cover"
             />
+          </figure>
+        )}
+        {!photoUrl && suggestion.enrichment?.imageUrl && (
+          <figure className="rounded-xl overflow-hidden border border-gray-200">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={suggestion.enrichment.imageUrl}
+              alt={plant.commonName}
+              className="w-full h-48 md:h-full object-cover"
+            />
+            <figcaption className="text-xs text-text-muted text-center py-1 bg-gray-50">
+              Imagen: Wikipedia
+            </figcaption>
           </figure>
         )}
       </div>
@@ -204,6 +217,65 @@ export default function StepDetail({
               </li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {/* Datos de Growstuff + links externos */}
+      {suggestion.enrichment && (
+        <section className="rounded-xl border border-gray-200 bg-white p-5 mb-8">
+          <h3 className="font-serif text-lg font-semibold text-text-main mb-3">
+            Datos de la comunidad (Growstuff)
+          </h3>
+          <dl className="grid gap-3 sm:grid-cols-3 text-sm mb-4">
+            {suggestion.enrichment.medianDaysToFirstHarvest && (
+              <div>
+                <dt className="text-text-muted text-xs">Primera cosecha</dt>
+                <dd className="font-semibold text-text-main">
+                  ~{suggestion.enrichment.medianDaysToFirstHarvest} días
+                </dd>
+              </div>
+            )}
+            {suggestion.enrichment.medianDaysToLastHarvest && (
+              <div>
+                <dt className="text-text-muted text-xs">Última cosecha</dt>
+                <dd className="font-semibold text-text-main">
+                  ~{suggestion.enrichment.medianDaysToLastHarvest} días
+                </dd>
+              </div>
+            )}
+            <div>
+              <dt className="text-text-muted text-xs">Cultivado por</dt>
+              <dd className="font-semibold text-text-main">
+                {suggestion.enrichment.plantingsCount} personas
+              </dd>
+            </div>
+            <div>
+              <dt className="text-text-muted text-xs">Tipo</dt>
+              <dd className="font-semibold text-text-main">
+                {suggestion.enrichment.perennial ? "Perenne" : "Anual"}
+              </dd>
+            </div>
+          </dl>
+          <div className="flex flex-wrap gap-3 text-xs">
+            <a
+              href={suggestion.enrichment.growstuffUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1.5 rounded-full bg-primary/10 text-primary font-medium hover:bg-primary/20 transition-colors"
+            >
+              🌱 Ver en Growstuff
+            </a>
+            {suggestion.enrichment.wikipediaUrl && (
+              <a
+                href={suggestion.enrichment.wikipediaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 font-medium hover:bg-blue-200 transition-colors"
+              >
+                📖 Wikipedia
+              </a>
+            )}
+          </div>
         </section>
       )}
 

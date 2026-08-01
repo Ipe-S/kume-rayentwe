@@ -213,3 +213,47 @@ export interface WeatherZoneInfo {
   recommendedPlants: string[];
   gardenTips: string[];
 }
+
+// ─── Growstuff + Wikimedia enrichment ────────────────────────────────────────
+
+/** Respuesta cruda de la API de Growstuff (/crops/{slug}.json) */
+export interface GrowstuffCrop {
+  id: number;
+  name: string;
+  slug: string;
+  en_wikipedia_url: string | null;
+  perennial: boolean;
+  median_lifespan: number | null;
+  median_days_to_first_harvest: number | null;
+  median_days_to_last_harvest: number | null;
+  plantings_count: number;
+  harvests_count: number;
+  scientific_names: { name: string }[];
+  alternate_names: { name: string; language: string }[];
+}
+
+/** Datos enriquecidos que se adjuntan a cada PlantSuggestion */
+export interface GrowstuffEnrichment {
+  growstuffSlug: string;
+  growstuffUrl: string;
+  wikipediaUrl: string | null;
+  /** Imagen principal del artículo de Wikipedia (vía Wikimedia REST API) */
+  imageUrl: string | null;
+  perennial: boolean;
+  medianDaysToFirstHarvest: number | null;
+  medianDaysToLastHarvest: number | null;
+  /** Cuántos usuarios en Growstuff han plantado este cultivo */
+  plantingsCount: number;
+  scientificName: string | null;
+}
+
+/** PlantSuggestion enriquecida con datos de Growstuff */
+export interface EnrichedPlantSuggestion extends PlantSuggestion {
+  enrichment: GrowstuffEnrichment | null;
+}
+
+/** SuggestionResponse con sugerencias enriquecidas */
+export interface EnrichedSuggestionResponse
+  extends Omit<SuggestionResponse, "suggestions"> {
+  suggestions: EnrichedPlantSuggestion[];
+}

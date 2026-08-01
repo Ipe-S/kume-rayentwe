@@ -7,9 +7,9 @@ import StepSuggestions from "./StepSuggestions";
 import StepDetail from "./StepDetail";
 import type {
   PlannerLocation,
-  PlantSuggestion,
+  EnrichedPlantSuggestion,
   SpaceInput,
-  SuggestionResponse,
+  EnrichedSuggestionResponse,
 } from "@/types";
 
 const STEPS = ["Ubicación", "Foto y medidas", "Sugerencias", "Detalle"];
@@ -29,10 +29,10 @@ export default function PlantingWizard() {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
 
-  const [data, setData] = useState<SuggestionResponse | null>(null);
+  const [data, setData] = useState<EnrichedSuggestionResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState<PlantSuggestion | null>(null);
+  const [selected, setSelected] = useState<EnrichedPlantSuggestion | null>(null);
 
   const goTo = useCallback((index: number) => {
     setStep(index);
@@ -53,7 +53,7 @@ export default function PlantingWizard() {
         light: space.light,
       });
       const res = await fetch(`/api/suggest-plants?${params}`);
-      const body: SuggestionResponse & { error?: string } = await res.json();
+      const body: EnrichedSuggestionResponse & { error?: string } = await res.json();
       if (!res.ok || body.error) {
         throw new Error(body.error ?? "No pudimos generar sugerencias.");
       }

@@ -1,14 +1,14 @@
 "use client";
 
-import type { PlantSuggestion, SuggestionResponse } from "@/types";
+import type { EnrichedPlantSuggestion, EnrichedSuggestionResponse } from "@/types";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 interface StepSuggestionsProps {
   loading: boolean;
   error: string | null;
-  data: SuggestionResponse | null;
+  data: EnrichedSuggestionResponse | null;
   onRetry: () => void;
-  onSelect: (suggestion: PlantSuggestion) => void;
+  onSelect: (suggestion: EnrichedPlantSuggestion) => void;
   onBack: () => void;
 }
 
@@ -72,6 +72,17 @@ export default function StepSuggestions({
                   onClick={() => onSelect(suggestion)}
                   className="w-full h-full text-left p-5 rounded-2xl border border-gray-200 bg-white hover:border-primary hover:shadow-md transition-all flex flex-col gap-3"
                 >
+                  {/* Imagen de Wikipedia vía Growstuff */}
+                  {suggestion.enrichment?.imageUrl && (
+                    <div className="relative w-full h-32 -mt-5 -mx-5 mb-2 rounded-t-2xl overflow-hidden" style={{ width: "calc(100% + 2.5rem)" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={suggestion.enrichment.imageUrl}
+                        alt={suggestion.plant.commonName}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <h3 className="font-serif text-lg font-semibold text-text-main">
@@ -79,7 +90,7 @@ export default function StepSuggestions({
                         {suggestion.plant.commonName}
                       </h3>
                       <p className="text-sm italic text-text-muted">
-                        {suggestion.plant.scientificName}
+                        {suggestion.enrichment?.scientificName ?? suggestion.plant.scientificName}
                       </p>
                     </div>
                     <span
@@ -101,12 +112,20 @@ export default function StepSuggestions({
                     <span className="px-2 py-1 rounded-full bg-gray-100 text-text-muted font-medium">
                       {suggestion.plant.matureWidthCm} × {suggestion.plant.matureHeightCm} cm
                     </span>
+                    {suggestion.enrichment?.medianDaysToFirstHarvest && (
+                      <span className="px-2 py-1 rounded-full bg-green-100 text-green-700 font-medium">
+                        ~{suggestion.enrichment.medianDaysToFirstHarvest} días a cosecha
+                      </span>
+                    )}
                   </div>
 
                   <p className="text-xs text-text-muted mt-auto">
                     {suggestion.unitsThatFit > 0
                       ? `Entran ~${suggestion.unitsThatFit} ejemplar${suggestion.unitsThatFit === 1 ? "" : "es"} en tu espacio`
                       : "El espacio medido es menor al marco de plantación recomendado"}
+                    {suggestion.enrichment?.plantingsCount
+                      ? ` · ${suggestion.enrichment.plantingsCount} personas lo cultivan en Growstuff`
+                      : ""}
                   </p>
                   <span className="text-sm text-primary font-medium">
                     Ver detalle →

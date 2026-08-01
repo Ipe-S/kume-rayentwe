@@ -4,8 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "perenual.com",
-        pathname: "/storage/**",
+        hostname: "upload.wikimedia.org",
       },
       {
         protocol: "https",

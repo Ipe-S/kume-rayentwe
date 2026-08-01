@@ -6,10 +6,11 @@ import {
   getWeatherEmoji,
 } from "@/lib/weather";
 import { suggestPlants } from "@/lib/plantSuggestions";
+import { enrichSuggestions } from "@/lib/growstuff";
 import type {
   ClimateSummary,
+  EnrichedSuggestionResponse,
   LightExposure,
-  SuggestionResponse,
 } from "@/types";
 
 const LIGHT_VALUES: LightExposure[] = ["pleno sol", "media sombra", "sombra"];
@@ -49,6 +50,7 @@ export async function GET(request: Request) {
   }
 
   try {
+    // ── 1. Clima real desde Open-Meteo ──────────────────────────────────────
     const weather = await getWeatherByCoords(lat, lon);
 
     const climate: ClimateSummary = {
@@ -63,6 +65,7 @@ export async function GET(request: Request) {
       ),
     };
 
+    // ── 2. Zona geográfica ──────────────────────────────────────────────────
     const zone = classifyGardenZone({
       lat,
       lon,
@@ -70,14 +73,27 @@ export async function GET(request: Request) {
       avgPrecip: climate.avgPrecip,
     });
 
-    const body: SuggestionResponse = {
+    // ── 3. Sugerencias del catálogo local con scoring climático/estacional ──
+    const suggestions = suggestPlants(
+      { widthCm, depthCm, light: light as LightExposure },
+      climate,
+      lat
+    );
+
+    // ── 4. Enriquecimiento con Growstuff + Wikimedia (paralelo, no bloqueante)
+    const plantIds = suggestions.map((s) => s.plant.id);
+    const enrichments = await enrichSuggestions(plantIds);
+
+    // ── 5. Combinar sugerencias con enriquecimiento ─────────────────────────
+    const enrichedSuggestions = suggestions.map((suggestion) => ({
+      ...suggestion,
+      enrichment: enrichments[suggestion.plant.id] ?? null,
+    }));
+
+    const body: EnrichedSuggestionResponse = {
       zone,
       climate,
-      suggestions: suggestPlants(
-        { widthCm, depthCm, light: light as LightExposure },
-        climate,
-        lat
-      ),
+      suggestions: enrichedSuggestions,
     };
 
     return NextResponse.json(body);
